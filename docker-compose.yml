@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  web:
+    image: httpd:latest
+    volumes:
+      - ./web/bin:/usr/local/apache2/htdocs 
+    ports:
+      - 80:80
+      
+  db:
+    image: dolthub/dolt-sql-server
+    ports:
+      - 3306
+    volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d
+
+  api:
+    build: api
+    ports:
+      - "81:8080"
